@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BoardGame.Models.UserModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Users Database</h2>
+
+<p>
+    @Html.ActionLink("Add user", "Create")
+</p>
+@*beginform*@
+
+@foreach (var item in Model)
+{
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Surname)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Phone)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+
+    <td>
+        @Html.ActionLink("Edit", "Edit")
+        @Html.ActionLink("Details", "Details", new { id = item.ID })
+        @Html.ActionLink("Delete","Delete", new { id = item.ID })
+    </td>
+</tr>
+<p></p>
+}
+
+

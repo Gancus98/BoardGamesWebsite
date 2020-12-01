@@ -170,12 +170,24 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserModelController.cs" />
+    <Compile Include="DAL\OnTheBoardContext.cs" />
+    <Compile Include="DAL\OnTheBoardDBInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdvertisementModels.cs" />
+    <Compile Include="Models\BoardGameModels.cs" />
+    <Compile Include="Models\CommentModels.cs" />
+    <Compile Include="Models\FriendModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MessageModels.cs" />
+    <Compile Include="Models\PlayerModels.cs" />
+    <Compile Include="Models\ReviewModels.cs" />
+    <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -235,6 +247,9 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\UserModel\Index.cshtml" />
+    <Content Include="Views\UserModel\Details.cshtml" />
+    <Content Include="Views\UserModel\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
