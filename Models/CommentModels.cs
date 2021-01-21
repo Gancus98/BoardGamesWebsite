@@ -11,9 +11,8 @@ namespace BoardGame.Models
         public int ID { get; set; }
         public string Contents { get; set; }
 
-        public int AuthorUserId { get; set; }
-       
-        
+        public DateTime PostDate { get; set; }
+
         public virtual UserModels Author { get; set; }
      
         public virtual ReviewModels Review { get; set; }

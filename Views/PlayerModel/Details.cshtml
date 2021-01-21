@@ -1,0 +1,39 @@
+﻿@model BoardGame.Models.PlayerModels
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PlayerModels</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Advertisement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Advertisement)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Player.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Player.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsConfirmed)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

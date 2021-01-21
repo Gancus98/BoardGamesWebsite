@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BoardGame.Models.BoardGameModels>
+
+@{
+    ViewBag.Title = "Games database:";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Games database:</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Designer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publisher)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfPlayers)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecommendedAge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GameTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Designer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Publisher)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfPlayers)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecommendedAge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GameTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Photo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

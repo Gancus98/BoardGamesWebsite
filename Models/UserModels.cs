@@ -20,14 +20,16 @@ namespace BoardGame.Models
         public virtual ICollection<PlayerModels> Players { get; set; } // one player can take part in many games
         public virtual ICollection<AdvertisementModels> Advertisements { get; set; }
 
-
         public virtual ICollection<MessageModels> MessagesSent { get; set; }
         public virtual ICollection<MessageModels> MessagesReceive { get; set; }
-
 
         public virtual ICollection<FriendModels> Observations { get; set; }
         public virtual ICollection<FriendModels> Followers { get; set; }
 
+        public string FullName
+        {
+            get { return Name + " " + Surname; }
+        }
 
     }
 }

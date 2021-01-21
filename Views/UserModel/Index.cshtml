@@ -1,40 +1,126 @@
-﻿@model IEnumerable<BoardGame.Models.UserModels>
+﻿@*@model IEnumerable<BoardGame.Models.UserModels>*@
+@model BoardGame.Models.BoardViewModels
+
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Users Database</h2>
+<h2>Users database:</h2>
 
 <p>
-    @Html.ActionLink("Add user", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
-@*beginform*@
 
-@foreach (var item in Model)
+@{ var headerMetadata = Model.Users.FirstOrDefault();}
+
+<table class="table">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadata.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadata.Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadata.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadata.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadata.Photo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadata.IsActive)
+                </th>
+                <th></th>
+            </tr>
+        
+
+        @foreach (var item in Model.Users)
+        {
+            string selectedRow = "";
+            if (item.ID == ViewBag.UserId)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Photo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.ActionLink("Select", "Index", new { id = item.ID }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+</table>
+
+
+
+@if (Model.Reviews != null)
 {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Surname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Phone)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Email)
-    </td>
 
-    <td>
-        @Html.ActionLink("Edit", "Edit")
-        @Html.ActionLink("Details", "Details", new { id = item.ID })
-        @Html.ActionLink("Delete","Delete", new { id = item.ID })
-    </td>
-</tr>
-<p></p>
+        var headerMetadataReview = Model.Reviews.FirstOrDefault();
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadataReview.BoardGame)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadataReview.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadataReview.Contents)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => headerMetadataReview.DateOfPublication)
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Reviews)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BoardGame.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Contents)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfPublication)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Select", "Index", new { id = item.ID }) |
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </table>
 }
-
 

@@ -9,14 +9,26 @@ using System.Web.Mvc;
 
 namespace BoardGame.Controllers
 {
+    [Authorize] 
+    //oznacza ze potrzebne logowanie aby sie tu dostac
     public class UserModelController : Controller
     {
         private OnTheBoardContext db = new OnTheBoardContext();
-        // GET: UserModel
-        public ActionResult Index()
+
+        //[Authorize (Users = "admin@admin.pl")]
+        [Authorize(Roles = "admin")]
+        public ActionResult Index(int? id)
         {
-            DbSet<UserModels> user = db.User;
-            return View(user.ToList());
+            var viewModel = new BoardViewModels();
+            viewModel.Users = db.User.Include(s => s.Reviews);
+
+            if (id != null)
+            {
+                ViewBag.UserId = id.Value;
+                viewModel.Reviews = db.Review.Where(i => i.Author.ID == id.Value).Include(r => r.BoardGame).Include(u=>u.Author);
+            }
+
+            return View(viewModel);
         }
 
         public ActionResult Details(int? id)
@@ -35,7 +47,6 @@ namespace BoardGame.Controllers
             return View(userModel);
         }
 
-
         public ActionResult Delete(int? id)
         {
             UserModels userModel = db.User.Find(id);
@@ -44,14 +55,44 @@ namespace BoardGame.Controllers
             return RedirectToAction("Index");
         }
 
+  
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            UserModels userModel = db.User.Find(id);
+
+            if (userModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userModel);
+        }
+
+
+        [HttpPost, ActionName("Edit")]
+        public ActionResult EditUser(UserModels userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(userModel).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(userModel);
+        }
+
         public ActionResult Create()
         {
             return View();
         }
 
+
         // to co przyjdzie z funcji create wyrzej w tej funkcji zostanie powiazane z klasą modelu
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Name, Surname, Phone, Email")] UserModels userModel)
+        public ActionResult Create(UserModels userModel)
         {
             if (ModelState.IsValid)
             {

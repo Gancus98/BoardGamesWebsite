@@ -168,18 +168,25 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdvertisementModelController.cs" />
+    <Compile Include="Controllers\BoardGameModelController.cs" />
+    <Compile Include="Controllers\CommentModelController.cs" />
+    <Compile Include="Controllers\FriendModelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessageModelController.cs" />
+    <Compile Include="Controllers\PlayerModelController.cs" />
+    <Compile Include="Controllers\ReviewModelController.cs" />
     <Compile Include="Controllers\UserModelController.cs" />
     <Compile Include="DAL\OnTheBoardContext.cs" />
     <Compile Include="DAL\OnTheBoardDBInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdvertisementModels.cs" />
     <Compile Include="Models\BoardGameModels.cs" />
+    <Compile Include="Models\BoardViewModels.cs" />
     <Compile Include="Models\CommentModels.cs" />
     <Compile Include="Models\FriendModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -196,6 +203,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\intro_background.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -247,9 +257,36 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\BoardGameModel\Index.cshtml" />
+    <Content Include="Views\BoardGameModel\Details.cshtml" />
+    <Content Include="Views\BoardGameModel\Edit.cshtml" />
+    <Content Include="Views\BoardGameModel\Create.cshtml" />
+    <Content Include="Views\BoardGameModel\Delete.cshtml" />
+    <Content Include="Views\ReviewModel\Index.cshtml" />
+    <Content Include="Views\ReviewModel\Details.cshtml" />
+    <Content Include="Views\ReviewModel\Edit.cshtml" />
+    <Content Include="Views\ReviewModel\Delete.cshtml" />
+    <Content Include="Views\ReviewModel\Create.cshtml" />
+    <Content Include="Views\AdvertisementModel\Index.cshtml" />
+    <Content Include="Views\AdvertisementModel\Edit.cshtml" />
+    <Content Include="Views\AdvertisementModel\Delete.cshtml" />
+    <Content Include="Views\AdvertisementModel\Details.cshtml" />
+    <Content Include="Views\AdvertisementModel\Create.cshtml" />
+    <Content Include="Views\MessageModel\Index.cshtml" />
+    <Content Include="Views\MessageModel\Delete.cshtml" />
+    <Content Include="Views\MessageModel\Details.cshtml" />
     <Content Include="Views\UserModel\Index.cshtml" />
-    <Content Include="Views\UserModel\Details.cshtml" />
     <Content Include="Views\UserModel\Create.cshtml" />
+    <Content Include="Views\UserModel\Edit.cshtml" />
+    <Content Include="Views\UserModel\Details.cshtml" />
+    <Content Include="Views\CommentModel\Index.cshtml" />
+    <Content Include="Views\CommentModel\Details.cshtml" />
+    <Content Include="Views\CommentModel\Delete.cshtml" />
+    <Content Include="Views\FriendModel\Index.cshtml" />
+    <Content Include="Views\FriendModel\Details.cshtml" />
+    <Content Include="Views\PlayerModel\Index.cshtml" />
+    <Content Include="Views\PlayerModel\Delete.cshtml" />
+    <Content Include="Views\PlayerModel\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

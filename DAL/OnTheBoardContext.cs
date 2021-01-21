@@ -24,8 +24,7 @@ namespace BoardGame.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Entity<MessageModels>()
+            modelBuilder.Entity<MessageModels>() 
                 .HasRequired(m => m.SenderUser)
                 .WithMany(t => t.MessagesSent)
                 .WillCascadeOnDelete(false);
