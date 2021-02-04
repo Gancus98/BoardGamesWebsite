@@ -34,7 +34,7 @@ namespace BoardGame.Models
     }
 
     //sposob na dodanie admina
-    public class IdentityDBInitializer<T> : DropCreateDatabaseAlways<ApplicationDbContext>
+    public class IdentityDBInitializer<T> : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
@@ -46,7 +46,7 @@ namespace BoardGame.Models
             var store = new UserStore<ApplicationUser>(context);
             var manager = new UserManager<ApplicationUser>(store);
             var user = new ApplicationUser { UserName = "admin@admin.pl" };
-            manager.Create(user, "somePassword");
+            manager.Create(user, "admin");
 
             var role = context.Roles.SingleOrDefault(m => m.Name == "admin");
             ApplicationUser user2 = userManager.FindByName("admin@admin.pl");

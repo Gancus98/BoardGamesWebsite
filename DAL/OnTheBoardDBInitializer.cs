@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BoardGame.DAL
 {
-    public class OnTheBoardDBInitializer<T>: DropCreateDatabaseAlways<OnTheBoardContext>
+    public class OnTheBoardDBInitializer<T>: CreateDatabaseIfNotExists<OnTheBoardContext>
     {
         protected override void Seed(OnTheBoardContext context)
         {
@@ -18,6 +18,7 @@ namespace BoardGame.DAL
                 Publisher = "Rebel",
                 NumberOfPlayers = "2-6",
                 RecommendedAge = 10,
+                Photo = "https://ireland.apollo.olxcdn.com/v1/files/5ezilm7ypj-PL/image;s=644x461",
                 Description = "Dwie drużyny, którym przewodzi dwóch Szefów Wywiadu, próbują" +
                 " jak najszybciej nawiązać kontakt ze wszystkimi swoimi agentami. " +
                 " Problem leży w tym, że Szef Wywiadu może podawać swojej drużynie " +

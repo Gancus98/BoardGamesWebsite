@@ -4,7 +4,7 @@
 }
 
 .introBt {
-    /*width: 100%;*/
+    width: 100%;
     font-size: 3em;
 }
 
@@ -17,7 +17,8 @@ p {
 }
 
 .intro {
-    /*background-image: url(./images/intro_background.png);*/
+    background-image: url(./images/intro_background.png);
+    background-position: center;
     background-color: black;
     display: flex;
     flex-direction: row;
@@ -36,7 +37,7 @@ p {
 
 
 
-.logo {
+.joinbt {
     letter-spacing: 6px;
     background: none;
     width: 300px;
@@ -52,12 +53,12 @@ p {
     z-index: 1;
 }
 
-.logo:hover {
-    color: #fff;
-    cursor: pointer;
-}
+    .joinbt:hover {
+        color: #fff;
+        cursor: pointer;
+    }
 
-    .logo:before {
+    .joinbt:before {
         transition: 0.5s all ease;
         position: absolute;
         top: 0;
@@ -69,7 +70,7 @@ p {
         background-color: #42FBF2;
     }
 
-    .logo:hover:before {
+    .joinbt:hover:before {
         transition: 0.5s all ease;
         left: 0;
         right: 0;
@@ -78,11 +79,28 @@ p {
     }
 
 
-/*a.classname {
-    background: url(~/Content/Images/logo.png) no-repeat top left;
-    display: block;
-    width: 150px;
-    height: 150px;
-    text-indent: -9999px;*/ /* hides the link text */
-/*}*/
 
+@media only screen and (max-width: 768px) {
+
+    .intro {
+        display: grid;
+        vertical-align: central;
+        align-items: center;
+    }
+
+    .joinbt {
+        font-size: 22px;
+        position: center;
+        width: 200px;
+        height: 70px;
+        margin-bottom: 20%;
+    }
+
+    p {
+        margin-top: 100px;
+        font-size: 15px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

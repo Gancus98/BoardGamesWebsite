@@ -1,16 +1,42 @@
-﻿@model IEnumerable<BoardGame.Models.BoardGameModels>
+﻿@*@model IEnumerable<BoardGame.Models.BoardGameModels>
 
 @{
     ViewBag.Title = "Games database:";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Games database:</h2>
+@if (User.IsInRole("user"))
+{
+    <h2>Games database:</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}*@
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<div class="row">
+        <div class="col-md-4">
+            One of three columns
+        </div>
+        <div class="col-md-4">
+            One of three columns
+        </div>
+        <div class="col-md-4">
+            One of three colu555mns
+        </div>
+</div>
+
+
+@*<div class="container">
+
+    <div class="row">
+        <div class="col">Kolumna 1</div>
+        <div class="col">Kolumna 2</div>
+        <div class="col">Kolumna 3</div>
+        <div class="col">Kolumna 4</div>
+    </div>
+</div>*@
+
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -39,38 +65,40 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Designer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberOfPlayers)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecommendedAge)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GameTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <img src=" @Html.DisplayFor(modelItem => item.Photo)" alt="Alternate Text" />
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfPlayers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecommendedAge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Photo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
-</table>
+</table>*@

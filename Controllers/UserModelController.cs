@@ -51,6 +51,7 @@ namespace BoardGame.Controllers
         {
             UserModels userModel = db.User.Find(id);
             db.User.Remove(userModel);
+            //var result = new AccountController().DeleteConfirmed(id.ToString());
             db.SaveChanges();
             return RedirectToAction("Index");
         }

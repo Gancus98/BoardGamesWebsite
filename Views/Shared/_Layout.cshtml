@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/Site.css")
 
 </head>
 <body>
@@ -22,14 +23,22 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Users", "Index", "UserModel")</li>
+                    @*Page.Response.Write("<script>console.log(`Jestem w srodku`);</script>");*@
+
                     <li>@Html.ActionLink("Games", "Index", "BoardGameModel")</li>
                     <li>@Html.ActionLink("Reviews", "Index", "ReviewModel")</li>
-                    <li>@Html.ActionLink("Advertisements", "Index", "AdvertisementModel")</li>
-                    <li>@Html.ActionLink("Messages", "Index", "MessageModel")</li>
-                    <li>@Html.ActionLink("Comments", "Index", "CommentModel")</li>
-                    <li>@Html.ActionLink("Friends", "Index", "FriendModel")</li>
-                    <li>@Html.ActionLink("Players", "Index", "PlayerModel")</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Users", "Index", "UserModel")</li>
+                    }
+                    @if (User.IsInRole("user"))
+                    {
+                        <li>@Html.ActionLink("Advertisements", "Index", "AdvertisementModel")</li>
+                        <li>@Html.ActionLink("Messages", "Index", "MessageModel")</li>
+                        <li>@Html.ActionLink("Comments", "Index", "CommentModel")</li>
+                        <li>@Html.ActionLink("Friends", "Index", "FriendModel")</li>
+                        <li>@Html.ActionLink("Players", "Index", "PlayerModel")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

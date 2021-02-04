@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BoardGame.Models;
+using BoardGame.DAL;
+using BoardGame.Models;
 
 namespace BoardGame.Controllers
 {
@@ -49,6 +51,44 @@ namespace BoardGame.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var user = await UserManager.FindByIdAsync(id);
+                var logins = user.Logins;
+                var rolesForUser = await _userManager.GetRolesAsync(id);
+
+                    foreach (var login in logins.ToList())
+                    {
+                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                    }
+
+                    if (rolesForUser.Count() > 0)
+                    {
+                        foreach (var item in rolesForUser.ToList())
+                        {
+                            // item should be the name of the role
+                            var result = await _userManager.RemoveFromRoleAsync(user.Id, item);
+                        }
+                    }
+
+                    await _userManager.DeleteAsync(user);
+                    
+                
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
             }
         }
 
@@ -144,6 +184,7 @@ namespace BoardGame.Controllers
 
         //
         // POST: /Account/Register
+        private OnTheBoardContext db = new OnTheBoardContext();
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -151,17 +192,29 @@ namespace BoardGame.Controllers
         {
             if (ModelState.IsValid)
             {
+                UserModels newUser = new Models.UserModels()
+                {
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    Phone = model.Phone,
+                    Photo = model.Photo,
+                    Email = model.Email,
+                };
+                db.User.Add(newUser);
+                db.SaveChanges();
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // Aby uzyskać więcej informacji o sposobie włączania potwierdzania konta i resetowaniu hasła, odwiedź stronę https://go.microsoft.com/fwlink/?LinkID=320771
                     // Wyślij wiadomość e-mail z tym łączem
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Potwierdź konto", "Potwierdź konto, klikając <a href=\"" + callbackUrl + "\">tutaj</a>");
+                    await this.UserManager.AddToRoleAsync(user.Id, "user");
 
                     return RedirectToAction("Index", "Home");
                 }

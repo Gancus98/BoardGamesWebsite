@@ -65,6 +65,22 @@ namespace BoardGame.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Surname")]
+        public string Surname { get; set; }
+
+        [Required]
+        [Display(Name = "Phone")]
+        public int Phone { get; set; }
+
+ 
+        [Display(Name = "Photo")]
+        public string Photo { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Adres e-mail")]
         public string Email { get; set; }
