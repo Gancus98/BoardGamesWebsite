@@ -84,7 +84,7 @@ namespace BoardGame.Controllers
                     
                 
 
-                return RedirectToAction("Index");
+                return RedirectToAction("About");
             }
             else
             {
@@ -216,7 +216,7 @@ namespace BoardGame.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Potwierdź konto", "Potwierdź konto, klikając <a href=\"" + callbackUrl + "\">tutaj</a>");
                     await this.UserManager.AddToRoleAsync(user.Id, "user");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("About", "Home");
                 }
                 AddErrors(result);
             }
@@ -409,7 +409,7 @@ namespace BoardGame.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("About", "Home");
             }
 
             if (ModelState.IsValid)
@@ -445,7 +445,7 @@ namespace BoardGame.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("About", "Home");
         }
 
         //
@@ -502,7 +502,7 @@ namespace BoardGame.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("About", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

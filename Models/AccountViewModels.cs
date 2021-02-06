@@ -6,7 +6,7 @@ namespace BoardGame.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Adres e-mail")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
     }
 
@@ -42,23 +42,23 @@ namespace BoardGame.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Adres e-mail")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Adres e-mail")]
+        [Display(Name = "E-mail")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Hasło")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Zapamiętać Cię?")]
+        [Display(Name = "Remember?")]
         public bool RememberMe { get; set; }
     }
 
@@ -82,18 +82,18 @@ namespace BoardGame.Models
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Adres e-mail")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} musi zawierać co najmniej następującą liczbę znaków: {2}.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Min 6 chars", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Hasło")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Potwierdź hasło")]
-        [Compare("Password", ErrorMessage = "Hasło i jego potwierdzenie są niezgodne.")]
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "Wrong password confirm")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -101,18 +101,18 @@ namespace BoardGame.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Adres e-mail")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} musi zawierać co najmniej następującą liczbę znaków: {2}.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Min 6 chars", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Hasło")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Potwierdź hasło")]
-        [Compare("Password", ErrorMessage = "Hasło i jego potwierdzenie są niezgodne.")]
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "Wrong password confirm")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -122,7 +122,7 @@ namespace BoardGame.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Adres e-mail")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
     }
 }

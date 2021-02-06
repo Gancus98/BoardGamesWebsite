@@ -4,9 +4,106 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Reviews database:</h2>
+@if (User.IsInRole("admin"))
+{
+    <h2 class="text-center m-4">Reviews database:</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardGame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfPublication)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoardGame.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfPublication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contents)
+                </td>
+                <td>
+                    <img class="img-thumbnail" src="@Html.DisplayFor(modelItem => item.Photo)" alt="Alternate Text" />
+                </td>
+                <td>
+                    <button class="btn-info w-100 m-1"> @Html.ActionLink("Details", "Details", new { id = item.ID })</button>
+                    <button class="btn-warning w-100 m-1"> @Html.ActionLink("Edit", "Edit", new { id = item.ID })</button>
+                    <button class="btn-danger w-100 m-1"> @Html.ActionLink("Delete", "Delete", new { id = item.ID })</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p class="mb-4"></p>
+    foreach (var item in Model)
+    {
+        <div class="row col-12">
+            <div class="card mb-3 border-primary" style="width: 100vw;">
+                <div class="row no-gutters">
+                    <div class="col-md-3 mt-auto">
+                        <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(modelItem => item.Photo)" class="card-img" alt="Image">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h3 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h3>
+                            <p class="card-text ">Author: @Html.DisplayFor(modelItem => item.Author.FullName)</p>
+                            <p class="card-text ">Date of publication: @Html.DisplayFor(modelItem => item.DateOfPublication)</p>
+                            <p class="card-text task ">@Html.DisplayFor(modelItem => item.Contents)</p>
+
+                        </div>
+
+
+                    </div>
+                    <a class="btn-sm stretched-link " href="@Url.Action("Details","ReviewModel", new { id = item.ID })"></a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    }
+}
+
+
+@*<p>
     @Html.ActionLink("Create New", "Create")
 </p>
 
@@ -73,4 +170,4 @@
         </tr>
     }
 
-</table>
+</table>*@

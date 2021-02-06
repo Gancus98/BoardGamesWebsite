@@ -54,7 +54,7 @@ namespace BoardGame.Controllers
         //public ActionResult Create([Bind(Exclude = "ID, Title, DateOfPublication, Author_Id, BoardGame_Id")] ReviewModels review)
         //{
         //    System.Diagnostics.Debug.WriteLine("[ReviewModelController - Create]", review.Author);
-            
+
         //    if (ModelState.IsValid)
         //    {
         //        db.Review.Add(review);
@@ -67,7 +67,9 @@ namespace BoardGame.Controllers
         //    return View(review);
         //}
 
+        
         [HttpPost]
+        [Authorize]
         public ActionResult Create([Bind(Include = "ID, Title, Photo, Contents, DateOfPublication")] ReviewModels review, int Author_Id, int BoardGame_Id)
         {
             if (ModelState.IsValid)

@@ -4,47 +4,134 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>ReviewModels</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<script type="text/javascript">
+    function test() {
+        var textar = document.getElementById("exampleTextarea").value
+        $('#Mytext').val(textar); 
+    };
+</script>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+@if (User.IsInRole("admin"))
+{
+    <h2 class="text-center m-4">Games database:</h2>
+    <button class="btn-lg bg-primary m-4">@Html.ActionLink("Add new game", "Create")</button>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardGame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfPublication)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo)
-        </dd>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.BoardGame.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Author.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Contents)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.DateOfPublication)
+            </td>
+            <td>
+                <img class="img-thumbnail" src="@Html.DisplayFor(model => model.Photo)" alt="Alternate Text" />
+            </td>
+        </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Contents)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Contents)
-        </dd>
+    </table>
+}
+else
+{
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfPublication)
-        </dt>
+    var comments = Model.Comments.ToList();
+    <p class="mb-0"></p>
+    <div class="row col-12 border-0 ">
+        <div class="jumbotron">
+            <h1 class="card-text">@Html.DisplayFor(model => model.Title)</h1>
+            <hr class="border-white">
+            <p class="card-text">Author: @Html.DisplayFor(model => model.Author.FullName)</p>
+            <p class="card-text">Published: @Html.DisplayFor(model => model.DateOfPublication)</p>
+            <div class="row col-12 mb-5">
+                <div class="col-md-4">
+                    <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Image">
+                </div>
+                <p class=" col-8 card-text ">@Html.DisplayFor(model => model.Contents)</p>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfPublication)
-        </dd>
+            <div>
+                <h2 class="m-3">
+                    Comments:<h2>
+    @if (comments.Count() == 0)
+    {
+        <div class="row">
+            <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a comment for this review yet</p>
 
-    </dl>
+        </div>
+
+
+    }
+    @foreach (var item in comments)
+    {
+        <blockquote class="blockquote border-bottom">
+            <div class="row">
+                <div class="col-12">
+                    <p class="lead p-0 m-0"> @item.Contents</p>
+                    <footer class="blockquote-footer text-info p-0 float-right">@item.Author.FullName <cite title="Source Title">@item.PostDate</cite></footer>
+                </div>
+            </div>
+        </blockquote>
+    }
+
+    @using (Html.BeginForm("Create", "CommentModel", new { id = Model.ID }))
+    {
+        <div class="form-group mt-5">
+            <label>Your comment</label>
+            <textarea class="form-control" name="textarea" rows="3"></textarea>
+        </div>
+        @*<input type="text" name="textarea" />*@
+
+        <input class="btn-primary float-right pr-4 pl-4" type="submit" value="Post" />
+    }
+    @*<div class="form-group">
+            <label for="exampleTextarea">Example textarea</label>
+            <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+            @{var content = "haloelorrrrrrrrrrrr";}
+            @{Html.Hidden("Mytext", 0);}
+        </div>
+        <a class="mt-5 col-3 float-right" href="@Url.Action("Create", "CommentModel", new { id = Model.ID, Mytext })">
+            <button class="btn-lg bg-secondary text" onclick="test()">Add new comment</button>
+        </a>*@
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+        </div>
+
+    </div>
+
+
+
+
+
+}

@@ -19,6 +19,48 @@ namespace BoardGame.Controllers
             return View(comments.ToList());
         }
 
+
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        [HttpPost]
+        public ActionResult Create(ReviewModels review, int id/*int id, string content*/)
+        {
+            try
+            {
+                    CommentModels comment1 = new CommentModels();
+
+                    var query = db.User.Where(i => i.Email == User.Identity.Name);
+                    UserModels user = query.Single();
+                    comment1.Author = user;
+
+                    var query2 = db.Review.Where(i => i.ID == id);
+                    ReviewModels review2 = query2.Single();
+
+
+                    comment1.Review = review2;
+                    System.Diagnostics.Debug.WriteLine(review.ID);
+                    comment1.PostDate = DateTime.Now;
+                    comment1.Contents = Request.Form["textarea"];
+                    if (ModelState.IsValid)
+                    {
+                        db.Comment.Add(comment1);
+                        db.SaveChanges();
+                        return RedirectToAction("Details", "ReviewModel", new { id });
+                    }
+                    return RedirectToAction("Details", "ReviewModel", new { id });
+
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
         public ActionResult Details(int? id)
         {
             if (id == null)

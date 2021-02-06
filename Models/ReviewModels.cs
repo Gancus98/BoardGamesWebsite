@@ -16,6 +16,8 @@ namespace BoardGame.Models
         
         public virtual BoardGameModels BoardGame { get; set; }
 
+        public virtual ICollection<CommentModels> Comments { get; set; }
+
         public virtual UserModels Author { get; set; }
 
     }
