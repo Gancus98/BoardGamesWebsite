@@ -215,8 +215,8 @@ namespace BoardGame.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Potwierdź konto", "Potwierdź konto, klikając <a href=\"" + callbackUrl + "\">tutaj</a>");
                     await this.UserManager.AddToRoleAsync(user.Id, "user");
-
-                    return RedirectToAction("About", "Home");
+                    ViewBag.Message = String.Format("Registered succesfully");
+                    return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
             }

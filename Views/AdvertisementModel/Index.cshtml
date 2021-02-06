@@ -4,60 +4,156 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Advertisements database:</h2>
+@if (User.IsInRole("admin"))
+{
+    <h2 class="text-center m-4">Advertisement database:</h2>
+    <button class="btn-lg bg-primary m-4">@Html.ActionLink("Add new game", "Create")</button>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardGame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxPlayer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaxPlayer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxPlayer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoardGame.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <button class="btn-info w-100 m-1"> @Html.ActionLink("Details", "Details", new { id = item.ID })</button>
+                    <button class="btn-warning w-100 m-1"> @Html.ActionLink("Edit", "Edit", new { id = item.ID })</button>
+                    <button class="btn-danger w-100 m-1"> @Html.ActionLink("Delete", "Delete", new { id = item.ID })</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p class="mb-4"></p>
+    foreach (var item in Model)
+    {
+        <div class="row col-12">
+            <div class="card mb-3 border-primary" style="width: 100vw;">
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(modelItem => item.Author.Photo)" class="card-img" alt="Image">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h3 class="card-title">@Html.DisplayFor(modelItem => item.Description)</h3>
+                            <p class="card-text">City: @Html.DisplayFor(modelItem => item.City)</p>
+                            <p class="card-text">Date: @Html.DisplayFor(modelItem => item.Date)</p>
+                            <p class="card-text">Max players: @Html.DisplayFor(modelItem => item.MaxPlayer)</p>
+
+                        </div>
+
+                    </div>
+                    <a class="stretched-link" href="@Url.Action("Details","AdvertisementModel", new { id = item.ID })"></a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    }
 }
 
-</table>
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxPlayer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxPlayer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+    </table>*@

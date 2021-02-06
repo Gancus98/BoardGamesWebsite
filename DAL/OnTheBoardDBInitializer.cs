@@ -89,8 +89,9 @@ namespace BoardGame.DAL
 
             UserModels user1 = new Models.UserModels()
             {
-                Name = "Jan",
-                Surname = "Kowalski",
+                Name = "Dominika",
+                Surname = "Kruk",
+                Photo = "https://cdn.pixabay.com/photo/2016/03/09/12/10/woman-1246299_960_720.jpg",
                 Phone = 555111222,
                 Email = "jan@email.com",
                 Reviews = new List<ReviewModels>
@@ -107,6 +108,7 @@ namespace BoardGame.DAL
             {
                 Name = "Tomasz",
                 Surname = "Wilk",
+                Photo = "https://cdn.pixabay.com/photo/2016/03/29/03/14/portrait-1287421_960_720.jpg",
                 Phone = 997998999,
                 Email = "wolf@email.com",
             };
@@ -145,6 +147,7 @@ namespace BoardGame.DAL
             {
                 Name = "Szymon",
                 Surname = "Pawlak",
+                Photo = "https://cdn.pixabay.com/photo/2016/03/26/20/35/young-man-1281282_960_720.jpg",
                 Phone = 12121212,
                 Email = "szpaw@email.com",
             };

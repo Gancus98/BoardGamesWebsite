@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdvertisementModels.cs" />
+    <Compile Include="Models\AdvertisementUserViewModels.cs" />
     <Compile Include="Models\BoardGameModels.cs" />
     <Compile Include="Models\BoardViewModels.cs" />
     <Compile Include="Models\CommentModels.cs" />

@@ -69,62 +69,59 @@ else
     var comments = Model.Comments.ToList();
     <p class="mb-0"></p>
     <div class="row col-12 border-0 ">
-        <div class="jumbotron">
-            <h1 class="card-text">@Html.DisplayFor(model => model.Title)</h1>
-            <hr class="border-white">
-            <p class="card-text">Author: @Html.DisplayFor(model => model.Author.FullName)</p>
-            <p class="card-text">Published: @Html.DisplayFor(model => model.DateOfPublication)</p>
-            <div class="row col-12 mb-5">
-                <div class="col-md-4">
-                    <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Image">
-                </div>
-                <p class=" col-8 card-text ">@Html.DisplayFor(model => model.Contents)</p>
+            <div class="jumbotron">
+                <h1 class="card-text">@Html.DisplayFor(model => model.Title)</h1>
+                <hr class="border-white">
+                <p class="card-text">Author: @Html.DisplayFor(model => model.Author.FullName)</p>
+                <p class="card-text">Published: @Html.DisplayFor(model => model.DateOfPublication)</p>
+                    <div class="row col-12 mb-5">
+                        <div class="col-md-4">
+                            <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Image">
+                        </div>
+                        <p class=" col-8 card-text ">@Html.DisplayFor(model => model.Contents)</p>
+                    </div>
+
+                    <div>
+                        <h2 class="m-3">
+                            Comments:<h2>
+                @if (comments.Count() == 0)
+                {
+                    <div class="row">
+                        <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a comment for this review yet</p>
+
+                    </div>
+
+
+                }
+                @foreach (var item in comments)
+                {
+                    <blockquote class="blockquote border-bottom">
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="lead p-0 m-0"> @item.Contents</p>
+                                <footer class="blockquote-footer text-info p-0 float-right">@item.Author.FullName <cite title="Source Title">@item.PostDate</cite></footer>
+                            </div>
+                        </div>
+                    </blockquote>
+                }
+
+                @using (Html.BeginForm("Create", "CommentModel", new { id = Model.ID }))
+                {
+                    <div class="form-group mt-5">
+                        <label>Your comment</label>
+                        <textarea class="form-control" name="textarea" rows="3"></textarea>
+                    </div>
+                    if(User.IsInRole("user"))
+                    {
+                        <input class="btn-primary float-right pr-4 pl-4" type="submit" value="Post" />
+                    }
+                    else
+                    {
+                         <a class="btn-primary float-right pr-4 pl-4" href="@Url.Action("Login", "Account")">Post</a>
+                    }
+
+                }
             </div>
-
-            <div>
-                <h2 class="m-3">
-                    Comments:<h2>
-    @if (comments.Count() == 0)
-    {
-        <div class="row">
-            <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a comment for this review yet</p>
-
-        </div>
-
-
-    }
-    @foreach (var item in comments)
-    {
-        <blockquote class="blockquote border-bottom">
-            <div class="row">
-                <div class="col-12">
-                    <p class="lead p-0 m-0"> @item.Contents</p>
-                    <footer class="blockquote-footer text-info p-0 float-right">@item.Author.FullName <cite title="Source Title">@item.PostDate</cite></footer>
-                </div>
-            </div>
-        </blockquote>
-    }
-
-    @using (Html.BeginForm("Create", "CommentModel", new { id = Model.ID }))
-    {
-        <div class="form-group mt-5">
-            <label>Your comment</label>
-            <textarea class="form-control" name="textarea" rows="3"></textarea>
-        </div>
-        @*<input type="text" name="textarea" />*@
-
-        <input class="btn-primary float-right pr-4 pl-4" type="submit" value="Post" />
-    }
-    @*<div class="form-group">
-            <label for="exampleTextarea">Example textarea</label>
-            <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-            @{var content = "haloelorrrrrrrrrrrr";}
-            @{Html.Hidden("Mytext", 0);}
-        </div>
-        <a class="mt-5 col-3 float-right" href="@Url.Action("Create", "CommentModel", new { id = Model.ID, Mytext })">
-            <button class="btn-lg bg-secondary text" onclick="test()">Add new comment</button>
-        </a>*@
-</div>
 
         </div>
 
