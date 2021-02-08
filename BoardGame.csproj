@@ -192,6 +192,7 @@
     <Compile Include="Models\FriendModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MessageFriendViewModels.cs" />
     <Compile Include="Models\MessageModels.cs" />
     <Compile Include="Models\PlayerModels.cs" />
     <Compile Include="Models\ReviewModels.cs" />

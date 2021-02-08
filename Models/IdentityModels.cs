@@ -46,7 +46,7 @@ namespace BoardGame.Models
             var store = new UserStore<ApplicationUser>(context);
             var manager = new UserManager<ApplicationUser>(store);
             var user = new ApplicationUser { UserName = "admin@admin.pl" };
-            manager.Create(user, "admin");
+            manager.Create(user, "somePassword");
 
             var role = context.Roles.SingleOrDefault(m => m.Name == "admin");
             ApplicationUser user2 = userManager.FindByName("admin@admin.pl");

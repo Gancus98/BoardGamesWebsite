@@ -43,10 +43,10 @@ namespace BoardGame.Controllers
             return View(game);
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.BoardGame_Id = new SelectList(db.BoardGame, "ID", "Title");
-            ViewBag.Author_Id = new SelectList(db.User, "ID", "FullName");
             return View();
         }
 
@@ -67,21 +67,23 @@ namespace BoardGame.Controllers
         //    return View(review);
         //}
 
-        
+
         [HttpPost]
         [Authorize]
-        public ActionResult Create([Bind(Include = "ID, Title, Photo, Contents, DateOfPublication")] ReviewModels review, int Author_Id, int BoardGame_Id)
+        public ActionResult Create([Bind(Include = "ID, Title, Photo, Contents, DateOfPublication")] ReviewModels review, int BoardGame_Id)
         {
+            System.Diagnostics.Debug.WriteLine("CREATE REVIEW");
+            var query = db.User.Where(i => i.Email == User.Identity.Name);
+            UserModels user = query.Single();
+            review.Author = user;
+            review.DateOfPublication = DateTime.Now;
+            var query2 = db.BoardGame.Where(i => i.ID == BoardGame_Id);
+            BoardGameModels game = query2.Single();
+            review.BoardGame = game;
+
+            System.Diagnostics.Debug.WriteLine(BoardGame_Id);
             if (ModelState.IsValid)
             {
-                var query1 = db.User.Where(i => i.ID == Author_Id);
-                UserModels user = query1.Single();
-                review.Author = user;
-
-                var query2 = db.BoardGame.Where(i => i.ID == BoardGame_Id);
-                BoardGameModels game = query2.Single();
-                review.BoardGame = game;
-
                 db.Review.Add(review);
                 db.SaveChanges();
                 return RedirectToAction("Index");

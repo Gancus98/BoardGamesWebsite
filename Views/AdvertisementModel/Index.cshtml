@@ -4,6 +4,17 @@
     ViewBag.Title = "Index";
 }
 
+<div class="jumbotron " style="min-height: 100vh;">
+        <p class="mb- display-4">Advertisements:</p>
+            <hr class="border-white mb-5" />
+@using (Html.BeginForm())
+{
+    <h3 class="">
+        Find by City: @Html.TextBox("SearchString")
+        <input class="btn-primary border-0 rounded" type="submit" value="Search" />
+    </h3>
+}
+
 @if (User.IsInRole("admin"))
 {
     <h2 class="text-center m-4">Advertisement database:</h2>
@@ -70,27 +81,37 @@
 }
 else
 {
-    <p class="mb-4"></p>
+    var userEmail = User.Identity.Name;
+
+    <button class="btn-lg bg-info m-4">@Html.ActionLink("Add advertisement", "Create")</button>
     foreach (var item in Model)
     {
+        var userEmailModel = Html.DisplayFor(modelItem => item.Author.Email).ToString();
         <div class="row col-12">
             <div class="card mb-3 border-primary" style="width: 100vw;">
-                <div class="row no-gutters">
-                    <div class="col-md-3">
-                        <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(modelItem => item.Author.Photo)" class="card-img" alt="Image">
+                <div class="row no-gutters p-2">
+                    <div class="col-md-3 my-auto">
+                        <img class="img-thumbnail rounded-lg m-2 my-auto" src="@Html.DisplayFor(modelItem => item.Author.Photo)" class="card-img" alt="Image">
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-7">
                         <div class="card-body">
                             <h3 class="card-title">@Html.DisplayFor(modelItem => item.Description)</h3>
-                            <p class="card-text">City: @Html.DisplayFor(modelItem => item.City)</p>
-                            <p class="card-text">Date: @Html.DisplayFor(modelItem => item.Date)</p>
-                            <p class="card-text">Max players: @Html.DisplayFor(modelItem => item.MaxPlayer)</p>
+                            <p class="card-text m-1">Author: @Html.DisplayFor(modelItem => item.Author.FullName)</p>
+                            <p class="card-text m-1">Game: @Html.DisplayFor(modelItem => item.BoardGame.Title)</p>
+                            <p class="card-text m-1">City: @Html.DisplayFor(modelItem => item.City)</p>
+                            <p class="card-text m-1">Date: @Html.DisplayFor(modelItem => item.Date)</p>
+                            <p class="card-text m-1">Max players: @Html.DisplayFor(modelItem => item.MaxPlayer)</p>
 
                         </div>
-
+                        <a class="stretched-link" href="@Url.Action("Details","AdvertisementModel", new { id = item.ID })"></a>
                     </div>
-                    <a class="stretched-link" href="@Url.Action("Details","AdvertisementModel", new { id = item.ID })"></a>
 
+                    <div class="col-md-2">
+                        @if (userEmailModel == userEmail)
+                        {
+                            <a class="btn-danger m-3 float-right p-2" href="@Url.Action("Delete","AdvertisementModel", new { id = item.ID })">Delete</a>
+                        }
+                    </div>
                 </div>
             </div>
 
@@ -100,7 +121,7 @@ else
 
     }
 }
-
+</div>
 @*<p>
         @Html.ActionLink("Create New", "Create")
     </p>

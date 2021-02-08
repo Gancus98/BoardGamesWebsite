@@ -86,40 +86,41 @@ else
                 </div>
                 <p class=" col-8 card-text ">@Html.DisplayFor(model => model.Description)</p>
             </div>
+            <div>
+                <h2 class="m-3 mt-5">
+                    Reviews:<h2>
+                        @if (reviews.Count() == 0)
+                        {
+                            <div class="row">
+                                <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a review for this game yet</p>
+                                <a class="col-4" href="@Url.Action("Create", "ReviewModel")">
+                                    <button class="btn bg-primary text border-0">Add own review</button>
+                                </a>
+                            </div>
 
+                        }
+                        @foreach (var item in reviews)
+                        {
+                            <blockquote class="blockquote border-bottom">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p class="mb-0"> @item.Title</p>
+                                        <footer class="blockquote-footer">@item.Author.FullName <cite title="Source Title">@item.DateOfPublication</cite></footer>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="@Url.Action("Details", "ReviewModel", new { id=item.ID })">
+                                            <button class="btn-primary float-right m-3 p-2 rounded border-0">Read on</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </blockquote>
+                        }
+            </div>
         </div>
 
     </div>
     
-    <div>
-        <h2 class="m-3">Reviews:<h2>
-    @if (reviews.Count() == 0)
-    {
-        <div class="row">
-            <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a review for this game yet</p>
-            <a class="col-4" href="@Url.Action("Create", "ReviewModel")">
-                <button class="btn-sm bg-info text">Add own review</button>
-            </a>
-        </div>
-        
-    }
-    @foreach (var item in reviews)
-    {
-        <blockquote class="blockquote border-bottom">
-            <div class="row">
-                <div class="col-8">
-                    <p class="mb-0"> @item.Title</p>
-                    <footer class="blockquote-footer">@item.Author.FullName <cite title="Source Title">@item.DateOfPublication</cite></footer>
-                </div>
-                <div class="col-4">
-                    <a href="@Url.Action("Details", "ReviewModel", new { id=item.ID })">
-                        <button class="btn-primary float-right m-3">Read on</button>
-                    </a>
-                </div>
-            </div>
-        </blockquote>
-    }
-</div>
+
    
 
 }
