@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BoardGame.Models;
+using BoardGame.DAL;
+using BoardGame.Models;
 
 namespace BoardGame.Controllers
 {
@@ -40,6 +42,17 @@ namespace BoardGame.Controllers
             }
         }
 
+        public new HttpContextBase HttpContext
+        {
+            get
+            {
+                HttpContextWrapper context =
+                    new HttpContextWrapper(System.Web.HttpContext.Current);
+                return (HttpContextBase)context;
+            }
+        }
+
+
         public ApplicationUserManager UserManager
         {
             get
@@ -49,6 +62,48 @@ namespace BoardGame.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string email)
+        {
+            System.Diagnostics.Debug.WriteLine("IN DELETE CONFIRMED");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    System.Diagnostics.Debug.WriteLine("------");
+                    System.Diagnostics.Debug.WriteLine(email);
+                    var user1 = UserManager.FindByEmail(email);
+                    System.Diagnostics.Debug.WriteLine("przed find by name async");
+                    var user2 =  UserManager.FindByName(user1.UserName);
+                    System.Diagnostics.Debug.WriteLine("po find by name async");
+                    System.Diagnostics.Debug.WriteLine("------");
+                    System.Diagnostics.Debug.WriteLine(user2.Email);
+             
+
+
+                    System.Diagnostics.Debug.WriteLine("before");
+                    System.Diagnostics.Debug.WriteLine(user2.SecurityStamp);
+
+                    UserManager.Delete(user2);
+                    System.Diagnostics.Debug.WriteLine("after");
+
+
+                    return RedirectToAction("About");
+                } catch
+                {
+                    System.Diagnostics.Debug.WriteLine("Exception in AccountController");
+                    return RedirectToAction("About");
+                }
+                
+            }
+            else
+            {
+                return View();
             }
         }
 
@@ -144,6 +199,7 @@ namespace BoardGame.Controllers
 
         //
         // POST: /Account/Register
+        private OnTheBoardContext db = new OnTheBoardContext();
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -151,19 +207,31 @@ namespace BoardGame.Controllers
         {
             if (ModelState.IsValid)
             {
+                UserModels newUser = new Models.UserModels()
+                {
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    Phone = model.Phone,
+                    Photo = model.Photo,
+                    Email = model.Email,
+                };
+                db.User.Add(newUser);
+                db.SaveChanges();
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // Aby uzyskać więcej informacji o sposobie włączania potwierdzania konta i resetowaniu hasła, odwiedź stronę https://go.microsoft.com/fwlink/?LinkID=320771
                     // Wyślij wiadomość e-mail z tym łączem
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Potwierdź konto", "Potwierdź konto, klikając <a href=\"" + callbackUrl + "\">tutaj</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    await this.UserManager.AddToRoleAsync(user.Id, "user");
+                    ViewBag.Message = String.Format("Registered succesfully");
+                    return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
             }
@@ -356,7 +424,7 @@ namespace BoardGame.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("About", "Home");
             }
 
             if (ModelState.IsValid)
@@ -392,7 +460,7 @@ namespace BoardGame.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("About", "Home");
         }
 
         //
@@ -449,7 +517,7 @@ namespace BoardGame.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("About", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

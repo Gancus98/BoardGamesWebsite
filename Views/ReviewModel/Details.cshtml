@@ -1,0 +1,183 @@
+﻿@model BoardGame.Models.ReviewModels
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<script type="text/javascript">
+    function test() {
+        var textar = document.getElementById("exampleTextarea").value
+        $('#Mytext').val(textar);
+    };
+</script>
+
+@if (User.IsInRole("admin"))
+{
+    <div class="jumbotron " style="min-height: 100vh;">
+        <h2 class="">Details review:</h2>
+        <button class="btn-lg bg-primary m-4">@Html.ActionLink("Add new game", "Create")</button>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BoardGame)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contents)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfPublication)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </th>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.BoardGame.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Author.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Contents)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.DateOfPublication)
+                </td>
+                <td>
+                    <img class="img-thumbnail" src="@Html.DisplayFor(model => model.Photo)" alt="Alternate Text" />
+                </td>
+            </tr>
+
+
+        </table>
+        </div>
+        }
+        else
+        {
+        var userEmail = User.Identity.Name;
+        var comments = Model.Comments.ToList();
+        <p class="mb-0"></p>
+        <div class="row col-12 border-0 ">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-10">
+                        <h1 class="card-text text-info position-absolute" style="bottom: 15%;">@Html.DisplayFor(model => model.Title)</h1>
+                    </div>
+                    <div class="col-2  rounded">
+                        <div class="row">
+                            <img class="img-thumbnail border-0 rounded-lg " style="max-width:50%; margin: auto;" src="@Html.DisplayFor(model => model.Author.Photo)" class="card-img" alt="Image">
+                        </div>
+                        <div class="row p-2">
+                            <p class="card-text">Author: @Html.DisplayFor(model => model.Author.FullName)</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-white">
+
+
+
+                <div class="row col-12 mb-5">
+                    <div class="col-md-4">
+                        <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Image">
+                    </div>
+                    <p class=" col-8 card-text ">@Html.DisplayFor(model => model.Contents)</p>
+                    <p class="card-text" style="position: absolute; right: 0; bottom: 0">Published: @Html.DisplayFor(model => model.DateOfPublication)</p>
+                </div>
+
+                <div>
+                    <h2 class="m-3">
+                        Comments:<h2>
+                            @if (comments.Count() == 0)
+                            {
+                                <div class="row">
+                                    <p class="display-2  col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a comment for this review yet</p>
+
+                                </div>
+
+
+                            }
+                            @foreach (var item in comments)
+                            {
+                                var userEmailModel = Html.DisplayFor(modelItem => item.Author.Email).ToString();
+                                <blockquote class="blockquote ">
+                                    <div class="row rounded bg-dark pt-2">
+
+                                        @if (userEmailModel == userEmail)
+                                        {
+                                            <div class="row  w-100 ">
+                                                <div class="col-12 ml-2">
+                                                    <footer class="blockquote-footer text-info p-1. display-1 ">@item.Author.FullName <cite title="Source Title">@item.PostDate</cite></footer>
+                                                </div>
+                                            </div>
+
+                                            <div class="row w-100 mt-2 p-2 ml-1">
+                                                <div class="col-9">
+                                                    <p class="lead "> @item.Contents</p>
+
+                                                </div>
+                                                <div class="col-3 float-right p-1">
+                                                    <a class="btn-danger float-right d-inline  btn-sm  p-1" href="@Url.Action("DeleteExacly", "CommentModel", new { id = item.ID })">Delete</a>
+
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="row  w-100 ">
+                                                <div class="col-12 ml-2">
+                                                    <footer class="blockquote-footer text-info p-1. display-1 ">@item.Author.FullName <cite title="Source Title">@item.PostDate</cite></footer>
+                                                </div>
+                                            </div>
+
+                                            <div class="row w-100 mt-2 p-2 ml-1">
+                                                <div class="col-12">
+                                                    <p class="lead "> @item.Contents</p>
+
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </blockquote>
+                            }
+
+                            @using (Html.BeginForm("Create", "CommentModel", new { id = Model.ID }))
+                            {
+                                <div class="form-group mt-5">
+                                    <label>Your comment</label>
+                                    <textarea class="form-control" name="textarea" rows="3"></textarea>
+                                </div>
+                                if (User.IsInRole("user"))
+                                {
+                                    <input class="btn-primary float-right pr-4 pl-4" type="submit" value="Post" />
+                                }
+                                else
+                                {
+                                    <a class="btn-primary float-right pr-4 pl-4" href="@Url.Action("Login", "Account")">Post</a>
+                                }
+
+                            }
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+        }

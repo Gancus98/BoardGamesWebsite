@@ -86,6 +86,7 @@ namespace BoardGame
             }
             return manager;
         }
+
     }
 
     // Skonfiguruj menedżera logowania aplikacji używanego w tej aplikacji.

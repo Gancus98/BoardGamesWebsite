@@ -1,7 +1,31 @@
-﻿@{
+﻿@model IEnumerable<BoardGame.Models.ReviewModels>
+@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+    <div class="jumbotron rounded-0 shadow-lg" style="min-height:100vh;">
+        <h1 class="display-3 font-weight-bold" style="color: #66BCCD">Hello On The Board</h1>
+        <h3 class="font-weight-lighter" style="margin-bottom: 10vh">To unlock the full capabilities of our website, log in</h3>
+        
+        
+        <h2 class="mt-5">The last reviews</h2>
+        <hr class="border-white mt-1">
+        <div class="container bg-dark p-3 rounded">
+            @{
+                <div class="row m-auto">
+                    @foreach (var item in Model)
+                    {
+                        <div class="card col bg-primary p-2 m-2">
+                            <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.Photo)" alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title  text-white">@Html.DisplayFor(modelItem => item.Title)</h4>
+                                <p class="card-title  text-info">@Html.DisplayFor(modelItem => item.Author.FullName)</p>
+                                <a class="btn-sm stretched-link " href="@Url.Action("Details","ReviewModel", new { id = item.ID })"></a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
 
-<p>Use this area to provide additional information.</p>
+

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BoardGame.Models.PlayerModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Players database:</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Advertisement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Player)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Advertisement.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsConfirmed)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

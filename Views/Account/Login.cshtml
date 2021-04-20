@@ -4,14 +4,15 @@
     ViewBag.Title = "Zaloguj";
 }
 
-<h2>@ViewBag.Title.</h2>
+
+<p></p>
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Zaloguj się za pomocą konta lokalnego.</h4>
+                <h4>Login from local account</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -37,23 +38,18 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+                    <div class="btn btn-primary btn-lg">
                         <input type="submit" value="Zaloguj" class="btn btn-default" />
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("Zarejestruj się jako nowy użytkownik", "Register")
+                    @Html.ActionLink("Register as new user", "Register")
                 </p>
                 @* Włącz ten element po włączeniu potwierdzenia konta dla funkcji resetowania hasła
                     <p>
                         @Html.ActionLink("Nie pamiętasz hasła?", "ForgotPassword")
                     </p>*@
             }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>

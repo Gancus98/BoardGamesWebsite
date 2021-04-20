@@ -1,0 +1,165 @@
+﻿@model BoardGame.Models.AdvertisementModels
+
+@{
+    ViewBag.Title = "Details";
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+
+}
+
+@if (User.IsInRole("admin"))
+{
+    <h2 class="text-center m-4">Games database:</h2>
+    <button class="btn-lg bg-primary m-4">@Html.ActionLink("Add new game", "Create")</button>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardGame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.BoardGame.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Author.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.City)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Description)
+            </td>
+        </tr>
+
+
+    </table>
+}
+else
+{
+    var userEmail = User.Identity.Name;
+    var players = Model.Players.ToList();
+    <p class="mb-0"></p>
+    <div class="row col-12 border-0 ">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="card-text">@Html.DisplayFor(model => model.Description)</h1>
+                    <hr class="border-white">
+                    <p class="card-text">Author: @Html.DisplayFor(model => model.Author.FullName)</p>
+                    <p class="card-text">Phone: @Html.DisplayFor(model => model.Author.Phone)</p>
+                    <p class="card-text">BoardGame: @Html.DisplayFor(model => model.BoardGame.Title)</p>
+                    <p class="card-text">Date: @Html.DisplayFor(model => model.Date)</p>
+                    <p class="card-text">City: @Html.DisplayFor(model => model.City)</p>
+                    <p class="card-text">MaxPlayers: @Html.DisplayFor(model => model.MaxPlayer)</p>
+                </div>
+                <div class="col-md-4">
+                    <img class="img-thumbnail rounded-lg mt-3" src="@Html.DisplayFor(model => model.Author.Photo)" class="card-img" alt="Image">
+                </div>
+            </div>
+            <hr class="mt-5 mb-5 border-white"></hr>
+
+
+            <div>
+                <h2 class="m-3">
+                    Players:<h2>
+    @if (players.Count() == 0)
+    {
+        <div class="row">
+            <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has join to this meeting yet</p>
+
+        </div>
+
+
+    }
+   
+    @foreach (var item in players)
+    {
+        var userEmailModel = Html.DisplayFor(modelItem => item.Player.Email).ToString();
+        BoardGame.DAL.OnTheBoardContext db = new BoardGame.DAL.OnTheBoardContext();
+        var query1 = db.User.Where(i => i.Email == userEmail);
+        BoardGame.Models.UserModels user1 = query1.Single();
+        var observationList = user1.Observations.ToList();
+        var isFriend = 0;
+        foreach (var observer in observationList)
+        {
+            if (observer.MyFollowers.Email == userEmailModel)
+            {
+                isFriend = 1;
+            }
+        }
+
+
+        <blockquote class="rounded bg-dark p-2">
+            <div class="row">
+                <div class="col-2">
+
+                    <img class="img-thumbnail rounded-lg border-0" src="@Html.DisplayFor(model => item.Player.Photo)" class="card-img" alt="Image">
+                </div>
+                <div class="col-8">
+                    <p class="lead p-0 m-0">Name: @item.Player.FullName</p>
+                    <p class="lead p-0 m-0">Phone:  @item.Player.Phone</p>
+                </div>
+                <div class="col-2">
+                    @if(userEmail != userEmailModel && isFriend == 0)
+                    {
+                        <a class="btn-primary p-3" style="font-size: 12px" href="@Url.Action("InviteToFriend", "AdvertisementModel", new { myEmail = userEmail, friendEmail = item.Player.Email, advId = item.Advertisement.ID})">
+                            Invite to friends
+                        </a>
+                    } 
+                </div>
+            </div>
+        </blockquote>
+    }
+
+    @using (Html.BeginForm("Create", "PlayerModel", new { id = Model.ID }))
+    {
+        <hr class="border-white m-5" />
+        if (User.IsInRole("user"))
+        {
+            <input class="btn-success btn-sm text-center p-3" type="submit" value="Join to game" />
+            <a class="btn-warning btn-sm text-center  p-3" href="@Url.Action("DeleteExacly", "PlayerModel", new { id = Model.ID })">Quit the game</a>
+        }
+        else
+        {
+            <a class="btn-success btn-sm text-center  p-3" href="@Url.Action("Login", "Account")">Join to game</a>
+
+
+        }
+
+    }
+</div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+}

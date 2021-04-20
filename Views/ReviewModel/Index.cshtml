@@ -1,0 +1,196 @@
+﻿@model IEnumerable<BoardGame.Models.ReviewModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+    <div class="jumbotron " style="min-height: 100vh;">
+        @using (Html.BeginForm())
+        {
+            <h3>Select board game:</h3>
+            <h3 class="row mb-5">
+                <div class="col-md-10">
+
+                    @Html.DropDownList("BoardGame_Id", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-2 my-auto">
+                    <input class="btn-primary border-0 rounded mt-4 float-right my-auto p-2" type="submit" value="Search" />
+                </div>
+
+            </h3>
+        }
+        @if (User.IsInRole("admin"))
+        {
+            <h2 class="text-center m-4">Reviews database:</h2>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.BoardGame)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Author)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateOfPublication)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Contents)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Photo)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BoardGame.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Author.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfPublication)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contents)
+                        </td>
+                        <td>
+                            <img class="img-thumbnail" src="@Html.DisplayFor(modelItem => item.Photo)" alt="Alternate Text" />
+                        </td>
+                        <td>
+                            <button class="btn-info w-100 m-1"> @Html.ActionLink("Details", "Details", new { id = item.ID })</button>
+                            <button class="btn-warning w-100 m-1"> @Html.ActionLink("Edit", "Edit", new { id = item.ID })</button>
+                            <button class="btn-danger w-100 m-1"> @Html.ActionLink("Delete", "Delete", new { id = item.ID })</button>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        }
+        else
+        {
+            var userEmail = User.Identity.Name;
+            <h1 class="display-4 font-weight-bold" style="color: #66BCCD">Reviews:</h1>
+            <hr class="border-white mb-2" />
+            <button class="btn-lg bg-info m-4">@Html.ActionLink("Add Review", "Create")</button>
+            foreach (var item in Model)
+            {
+                var userEmailModel = Html.DisplayFor(modelItem => item.Author.Email).ToString();
+                <div class="row col-12">
+                    <div class="card mb-3 border-primary" style="width: 100vw;">
+                        <div class="row no-gutters">
+                            <div class="col-md-3 my-auto p-2">
+                                <img class="img-thumbnail rounded-lg p-2 border-0 my-auto" src="@Html.DisplayFor(modelItem => item.Photo)" class="card-img" alt="Image">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body">
+                                    <h3 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h3>
+                                    <p class="card-text m-1">Author: @Html.DisplayFor(modelItem => item.Author.FullName)</p>
+                                    <p class="card-text m-1">Game: @Html.DisplayFor(modelItem => item.BoardGame.Title)</p>
+                                    <p class="card-text m-1">Date of publication: @Html.DisplayFor(modelItem => item.DateOfPublication)</p>
+                                    <p class="card-text task m-1">@Html.DisplayFor(modelItem => item.Contents)</p>
+
+                                </div>
+                                <a class="btn-sm stretched-link " href="@Url.Action("Details","ReviewModel", new { id = item.ID })"></a>
+
+                            </div>
+                            <div class="col-md-2">
+                                @if (userEmailModel == userEmail)
+                                {
+                                    <a class="btn-danger m-3 float-right p-2" href="@Url.Action("Delete","ReviewModel", new { id = item.ID })">Delete</a>
+                                }
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            }
+        }
+
+
+        @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+
+        @using (Html.BeginForm())
+        {
+            <p>
+
+                BoardGame:    @Html.DropDownList("BoardGame_Id", null, "All", htmlAttributes: new { @class = "form-control" })
+
+                <input type="submit" value="Filter" />
+
+            </p>
+        }
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BoardGame)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contents)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfPublication)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BoardGame.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Photo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Contents)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfPublication)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author.FullName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </table>*@
+    </div>

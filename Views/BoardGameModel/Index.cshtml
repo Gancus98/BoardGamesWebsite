@@ -1,0 +1,113 @@
+﻿@model IEnumerable<BoardGame.Models.BoardGameModels>
+
+@{
+    ViewBag.Title = "Games database:";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="jumbotron " style="min-height: 100vh;">
+@if (User.IsInRole("admin"))
+{
+    <h2 class="text-center m-4">Games database:</h2>
+    <button class="btn-lg bg-primary m-4 border-0" >@Html.ActionLink("Add new game", "Create")</button>
+    <table class="table">
+        <tr >
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Designer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPlayers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecommendedAge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfPlayers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecommendedAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameTime)
+                </td>
+                <td >
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td >
+                    <img class ="img-thumbnail" src="@Html.DisplayFor(modelItem => item.Photo)" alt="Alternate Text" />
+                </td>
+                <td>
+                    <button class="btn-info w-100 m-1"> @Html.ActionLink("Details", "Details", new { id = item.ID })</button>
+                    <button class="btn-warning w-100 m-1"> @Html.ActionLink("Edit", "Edit", new { id = item.ID })</button>
+                    <button class="btn-danger w-100 m-1"> @Html.ActionLink("Delete", "Delete", new { id = item.ID })</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h1 class="display-4 font-weight-bold" style="color: #66BCCD">Games:</h1>
+    <hr class="border-white mb-5"/>
+    foreach (var item in Model)
+    {
+        <div class="row col-12 border-primary">
+            <div class="card mb-3 border-primary" style="width: 100vw;">
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <img class="img-thumbnail border-primary m-2 rounded-lg" src="@Html.DisplayFor(modelItem => item.Photo)" class="card-img" alt="Image">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h3 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h3>
+                            <p class="card-text">Author: @Html.DisplayFor(modelItem => item.Designer)</p>
+                            <p class="card-text">Players: @Html.DisplayFor(modelItem => item.NumberOfPlayers)</p>
+                            <p class="card-text">Game time: @Html.DisplayFor(modelItem => item.GameTime)</p>
+                            <p class="card-text task">Description: @Html.DisplayFor(modelItem => item.Description)</p>
+
+                        </div>
+
+                    </div>
+                    <a class="stretched-link" href="@Url.Action("Details","BoardGameModel", new { id = item.ID })"></a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    }
+}
+</div>

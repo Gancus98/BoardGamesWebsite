@@ -1,0 +1,63 @@
+﻿@model BoardGame.Models.MessageModels
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MessageModels</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SenderUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SenderUser.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiverUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiverUser.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contents)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contents)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReadDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReadDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

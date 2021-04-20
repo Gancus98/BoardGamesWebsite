@@ -1,0 +1,106 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+}
+
+.introBt {
+    width: 100%;
+    font-size: 3em;
+}
+
+p {
+    width: 50%;
+    letter-spacing: 2px;
+    text-align: justify;
+    font-family: 'Roboto';
+    font-weight: 100;
+}
+
+.intro {
+    background-image: url(./images/bgready.png);
+    background-position: center;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+
+    font-size: 2vw;
+    color: white;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+.joinbt {
+    letter-spacing: 6px;
+    background: none;
+    width: 300px;
+    height: 100px;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    transition: ease-out 0.3s;
+    font-size: 2vw;
+    outline: none;
+    border: 3px solid #42FBF2;
+    position: relative;
+    z-index: 1;
+}
+
+    .joinbt:hover {
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .joinbt:before {
+        transition: 0.5s all ease;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        right: 50%;
+        bottom: 0;
+        opacity: 0;
+        content: "";
+        background-color: #42FBF2;
+    }
+
+    .joinbt:hover:before {
+        transition: 0.5s all ease;
+        left: 0;
+        right: 0;
+        opacity: 1;
+        z-index: -1;
+    }
+
+
+
+@media only screen and (max-width: 768px) {
+
+    .intro {
+        display: grid;
+        vertical-align: central;
+        align-items: center;
+    }
+
+    .joinbt {
+        font-size: 22px;
+        position: center;
+        width: 200px;
+        height: 70px;
+        margin-bottom: 20%;
+    }
+
+    p {
+        margin-top: 100px;
+        font-size: 15px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
