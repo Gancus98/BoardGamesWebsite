@@ -15,7 +15,7 @@ namespace BoardGame.Controllers
 
 
         
-        public ActionResult InviteToFriend(string myEmail, string friendEmail)
+        public ActionResult InviteToFriend(string myEmail, string friendEmail, int advId)
         {
             try
             {
@@ -42,14 +42,15 @@ namespace BoardGame.Controllers
                 db.Friend.Add(friendship);
                 db.Friend.Add(friendship2);
                 db.SaveChanges();
-                return RedirectToAction("Index", "AdvertisementModel");
+                return RedirectToAction("Details", "AdvertisementModel", new { id = advId });
             }
             catch
             {
-                return RedirectToAction("Index", "AdvertisementModel");
+                return RedirectToAction("Details", "AdvertisementModel", new { id = advId });
             }
         }
 
+        [Authorize]
         public ActionResult Index(string searchString)
         {
             System.Diagnostics.Debug.WriteLine(searchString);
@@ -167,9 +168,11 @@ namespace BoardGame.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            System.Diagnostics.Debug.WriteLine("Delete advmodel");
             AdvertisementModels advertisement = db.Advertisement.Find(id);
             try
             {
+                advertisement.Players.Clear();
                 db.Advertisement.Remove(advertisement);
                 db.SaveChanges();
                 return RedirectToAction("Index");

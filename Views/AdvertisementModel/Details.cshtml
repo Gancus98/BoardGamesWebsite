@@ -127,7 +127,7 @@ else
                 <div class="col-2">
                     @if(userEmail != userEmailModel && isFriend == 0)
                     {
-                        <a class="btn-primary p-3" style="font-size: 12px" href="@Url.Action("InviteToFriend", "AdvertisementModel", new { myEmail = userEmail, friendEmail = item.Player.Email})">
+                        <a class="btn-primary p-3" style="font-size: 12px" href="@Url.Action("InviteToFriend", "AdvertisementModel", new { myEmail = userEmail, friendEmail = item.Player.Email, advId = item.Advertisement.ID})">
                             Invite to friends
                         </a>
                     } 

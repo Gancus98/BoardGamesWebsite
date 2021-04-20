@@ -8,7 +8,7 @@
 @if (User.IsInRole("admin"))
 {
     <h2 class="text-center m-4">Games database:</h2>
-    <button class="btn-lg bg-primary m-4" >@Html.ActionLink("Add new game", "Create")</button>
+    <button class="btn-lg bg-primary m-4 border-0" >@Html.ActionLink("Add new game", "Create")</button>
     <table class="table">
         <tr >
             <th>
@@ -78,7 +78,7 @@
 }
 else
 {
-    <p class="mb- display-4">Games:</p>
+    <h1 class="display-4 font-weight-bold" style="color: #66BCCD">Games:</h1>
     <hr class="border-white mb-5"/>
     foreach (var item in Model)
     {

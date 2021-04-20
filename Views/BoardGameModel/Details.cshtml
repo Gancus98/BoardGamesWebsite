@@ -6,200 +6,201 @@
 }
 @if (User.IsInRole("admin"))
 {
-    <h2 class="text-center m-4">Games database:</h2>
-    <button class="btn-lg bg-primary m-4">@Html.ActionLink("Add new game", "Create")</button>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Designer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Publisher)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfPlayers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecommendedAge)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GameTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Photo)
-            </th>
-            <th></th>
-        </tr>
+    <div class="jumbotron " style="min-height: 100vh;">
+        <h2 class="text-center m-4">Game Details</h2>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Designer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Publisher)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfPlayers)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecommendedAge)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GameTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Photo)
+                </th>
+                <th></th>
+            </tr>
 
 
-        <tr>
-            <td>
-                @Html.DisplayFor(model => model.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Designer)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Publisher)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.NumberOfPlayers)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.RecommendedAge)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.GameTime)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Description)
-            </td>
-            <td>
-                <img class="img-thumbnail" src="@Html.DisplayFor(model => model.Photo)" alt="Alternate Text" />
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Designer)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Publisher)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.NumberOfPlayers)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.RecommendedAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.GameTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Description)
+                </td>
+                <td>
+                    <img class="img-thumbnail" src="@Html.DisplayFor(model => model.Photo)" alt="Alternate Text" />
+                </td>
+            </tr>
 
 
-    </table>
-}
-else
-{
-    var reviews = Model.Reviews.ToList();
-    <p class="mb-0"></p>
-    <div class="row col-12 border-0 ">
-        <div class="jumbotron ">
-            <h1 class="card-text">@Html.DisplayFor(model => model.Title)</h1>
-            <hr class="border-white">
-            <p class="card-text">Author: @Html.DisplayFor(model => model.Designer)</p>
-            <p class="card-text">Publisher: @Html.DisplayFor(model => model.Publisher)</p>
-            <p class="card-text">Players: @Html.DisplayFor(model => model.NumberOfPlayers)</p>
-            <p class="card-text">Game time: @Html.DisplayFor(model => model.GameTime)</p>
-            <div class="row col-12">
-                <div class="col-md-4">
-                    <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Image">
+        </table>
+        </div>
+        }
+        else
+        {
+        var reviews = Model.Reviews.ToList();
+        <p class="mb-0"></p>
+        <div class="row col-12 border-0 ">
+            <div class="jumbotron ">
+                <h1 class="card-text">@Html.DisplayFor(model => model.Title)</h1>
+                <hr class="border-white">
+                <p class="card-text">Author: @Html.DisplayFor(model => model.Designer)</p>
+                <p class="card-text">Publisher: @Html.DisplayFor(model => model.Publisher)</p>
+                <p class="card-text">Players: @Html.DisplayFor(model => model.NumberOfPlayers)</p>
+                <p class="card-text">Game time: @Html.DisplayFor(model => model.GameTime)</p>
+                <div class="row col-12">
+                    <div class="col-md-4">
+                        <img class="img-thumbnail rounded-lg" src="@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Image">
+                    </div>
+                    <p class=" col-8 card-text ">@Html.DisplayFor(model => model.Description)</p>
                 </div>
-                <p class=" col-8 card-text ">@Html.DisplayFor(model => model.Description)</p>
-            </div>
-            <div>
-                <h2 class="m-3 mt-5">
-                    Reviews:<h2>
-                        @if (reviews.Count() == 0)
-                        {
-                            <div class="row">
-                                <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a review for this game yet</p>
-                                <a class="col-4" href="@Url.Action("Create", "ReviewModel")">
-                                    <button class="btn bg-primary text border-0">Add own review</button>
-                                </a>
-                            </div>
-
-                        }
-                        @foreach (var item in reviews)
-                        {
-                            <blockquote class="blockquote border-bottom">
+                <div>
+                    <h2 class="m-3 mt-5">
+                        Reviews:<h2>
+                            @if (reviews.Count() == 0)
+                            {
                                 <div class="row">
-                                    <div class="col-8">
-                                        <p class="mb-0"> @item.Title</p>
-                                        <footer class="blockquote-footer">@item.Author.FullName <cite title="Source Title">@item.DateOfPublication</cite></footer>
-                                    </div>
-                                    <div class="col-4">
-                                        <a href="@Url.Action("Details", "ReviewModel", new { id=item.ID })">
-                                            <button class="btn-primary float-right m-3 p-2 rounded border-0">Read on</button>
-                                        </a>
-                                    </div>
+                                    <p class="col-8 text-info font-italic blockquote-footer">Unfortunately, no one has written a review for this game yet</p>
+                                    <a class="col-4" href="@Url.Action("Create", "ReviewModel")">
+                                        <button class="btn bg-primary text border-0">Add own review</button>
+                                    </a>
                                 </div>
-                            </blockquote>
-                        }
+
+                            }
+                            @foreach (var item in reviews)
+                            {
+                                <blockquote class="blockquote border-bottom">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <p class="mb-0"> @item.Title</p>
+                                            <footer class="blockquote-footer">@item.Author.FullName <cite title="Source Title">@item.DateOfPublication</cite></footer>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="@Url.Action("Details", "ReviewModel", new { id=item.ID })">
+                                                <button class="btn-primary float-right m-3 p-2 rounded border-0">Read on</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            }
+                </div>
             </div>
+
         </div>
 
-    </div>
-    
-
-   
-
-}
 
 
 
-@*<h2>Details</h2>
+        }
 
-    <div>
-        <h4>BoardGameModels</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Designer)
-            </dt>
+        @*<h2>Details</h2>
 
-            <dd>
-                @Html.DisplayFor(model => model.Designer)
-            </dd>
+            <div>
+                <h4>BoardGameModels</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Publisher)
-            </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Publisher)
-            </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Designer)
+                    </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.NumberOfPlayers)
-            </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Designer)
+                    </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.NumberOfPlayers)
-            </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Publisher)
+                    </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.RecommendedAge)
-            </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Publisher)
+                    </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.RecommendedAge)
-            </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.NumberOfPlayers)
+                    </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.GameTime)
-            </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NumberOfPlayers)
+                    </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.GameTime)
-            </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RecommendedAge)
+                    </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.RecommendedAge)
+                    </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.GameTime)
+                    </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Photo)
-            </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.GameTime)
+                    </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.Photo)
-            </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
 
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Photo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Photo)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>*@

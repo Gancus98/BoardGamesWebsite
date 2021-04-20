@@ -1,11 +1,13 @@
 ﻿using BoardGame.DAL;
 using BoardGame.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace BoardGame.Controllers
 {
@@ -17,18 +19,27 @@ namespace BoardGame.Controllers
 
         //[Authorize (Users = "admin@admin.pl")]
         [Authorize(Roles = "admin")]
-        public ActionResult Index(int? id)
+        public ActionResult Index(string searchString)
         {
-            var viewModel = new BoardViewModels();
-            viewModel.Users = db.User.Include(s => s.Reviews);
-
-            if (id != null)
+            System.Diagnostics.Debug.WriteLine(searchString);
+            if (!String.IsNullOrEmpty(searchString))
             {
-                ViewBag.UserId = id.Value;
-                viewModel.Reviews = db.Review.Where(i => i.Author.ID == id.Value).Include(r => r.BoardGame).Include(u=>u.Author);
+                List<UserModels> users1 = new List<UserModels>();
+                users1 = db.User.ToList();
+                List<UserModels> users3 = new List<UserModels>();
+                foreach (var x in users1)
+                {
+                    if (x.Surname.ToLower().Contains(searchString.ToLower())) {
+                        users3.Add(x);
+                    }
+                }
+                return View(users3.ToList());
             }
-
-            return View(viewModel);
+            else
+            {
+                DbSet<UserModels> users2 = db.User;
+                return View((users2.ToList()));
+            }
         }
 
         public ActionResult Details(int? id)
@@ -47,16 +58,36 @@ namespace BoardGame.Controllers
             return View(userModel);
         }
 
-        public ActionResult Delete(int? id)
+        [HttpPost]
+        public ActionResult Delete(int id)
         {
+            System.Diagnostics.Debug.WriteLine("DELETE USERMODEL CONTROLLER");
             UserModels userModel = db.User.Find(id);
-            db.User.Remove(userModel);
-            //var result = new AccountController().DeleteConfirmed(id.ToString());
-            db.SaveChanges();
+            try {
+                System.Diagnostics.Debug.WriteLine(userModel.Email);
+                db.Review.RemoveRange(db.Review.Where(i => i.Author.ID == userModel.ID));
+                db.Comment.RemoveRange(db.Comment.Where(i => i.Author.ID == userModel.ID));
+                db.Advertisement.RemoveRange(db.Advertisement.Where(i => i.Author.ID == userModel.ID));
+                db.Message.RemoveRange(db.Message.Where(i => (i.ReceiverUser.ID == userModel.ID || i.SenderUser.ID == userModel.ID)));
+                db.Player.RemoveRange(db.Player.Where(i => i.Player.ID == userModel.ID));
+                db.Friend.RemoveRange(db.Friend.Where(i => (i.MyFollowers.ID == userModel.ID || i.MyObservations.ID == userModel.ID)));
+                new AccountController().DeleteConfirmed(userModel.Email);
+
+                db.User.Remove(userModel);
+                db.SaveChanges();
+
+
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("TU RZUCAM");
+                return RedirectToAction("Index");
+            }
+
             return RedirectToAction("Index");
         }
 
-  
+
         public ActionResult Edit(int? id)
         {
             if (id == null)

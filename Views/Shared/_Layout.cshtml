@@ -28,12 +28,26 @@
                 {
                     <li><a class="nav-link" href="@Url.Action("Index", "UserModel")">Users</a></li>
                     <li><a class="nav-link" href="@Url.Action("Index", "CommentModel")">Comments</a></li>
+                    <li><a class="nav-link" href="@Url.Action("Index", "AdvertisementModel")">Advertisements</a></li>
                 }
                 @if (User.IsInRole("user"))
                 {
                     <li><a class="nav-link" href="@Url.Action("Index", "AdvertisementModel")">Advertisements</a></li>
-                    <li><a class="nav-link" href="@Url.Action("Index", "MessageModel")">Messages</a></li>
+                    var userEmail = User.Identity.Name;
+                    BoardGame.DAL.OnTheBoardContext db = new BoardGame.DAL.OnTheBoardContext();
+                    var query1 = db.User.Where(i => i.Email == userEmail);
+                    BoardGame.Models.UserModels user = query1.Single();
 
+                    var query2 = db.Message.Where(i => i.ReceiverUser.ID == user.ID).Where(i => i.ReadDate == null);
+                    BoardGame.Models.MessageModels messages = query2.FirstOrDefault();
+                    if (messages != null)
+                    {
+                        <li><a class="nav-link bg-warning" href="@Url.Action("Index", "MessageModel")">Messages</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="nav-link" href="@Url.Action("Index", "MessageModel")">Messages</a></li>
+                    }
                 }
             </ul>
             @Html.Partial("_LoginPartial")

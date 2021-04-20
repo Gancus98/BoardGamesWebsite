@@ -13,86 +13,86 @@
     </script>
 
 }
-<h2>Delete</h2>
+<div class="jumbotron " style="min-height: 100vh;">
+    <h2>Game delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>BoardGameModels</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Designer)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Designer)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Designer)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Designer)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Publisher)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Publisher)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Publisher)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberOfPlayers)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.NumberOfPlayers)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfPlayers)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfPlayers)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RecommendedAge)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.RecommendedAge)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.RecommendedAge)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.RecommendedAge)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GameTime)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.GameTime)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.GameTime)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GameTime)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Photo)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Photo)
+            </dd>
 
-    </dl>
+        </dl>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-primary border-0" />
+            </div>
+        }
+    </div>
 </div>

@@ -25,6 +25,7 @@ namespace BoardGame.Controllers
 
             if (id != null)
             {
+                
 
 
                 var query2 = db.Friend.Where(i => i.ID == id.Value);
@@ -32,6 +33,23 @@ namespace BoardGame.Controllers
                 System.Diagnostics.Debug.WriteLine("Myf MyO: ", friendship.MyFollowers, friendship.MyObservations, "---");
                 var query3 = db.User.Where(i => i.ID == friendship.MyObservations.ID);
                 UserModels receiver = query3.Single();
+
+
+                // message isReaded
+                List<MessageModels> messagesList = db.Message.Where(i => i.ReceiverUser.ID == logedUser.ID)
+                    .Where(j => j.ReadDate == null)
+                    .Where(j => j.SenderUser.ID == receiver.ID)
+                    .ToList();
+                foreach (var x in messagesList)
+                {
+                    System.Diagnostics.Debug.WriteLine("IN LOOP");
+                    x.ReadDate = DateTime.Now;
+
+                }
+                db.SaveChanges();
+
+
+
                 System.Diagnostics.Debug.WriteLine(receiver.ID);
                 System.Diagnostics.Debug.WriteLine("---------------------------");
                 System.Diagnostics.Debug.WriteLine("Chose friend: ", receiver.FullName, "---");

@@ -147,6 +147,7 @@ namespace BoardGame.Controllers
         public ActionResult Delete(int id)
         {
             ReviewModels review = db.Review.Find(id);
+            review.Comments.Clear();
             try
             {
                 db.Review.Remove(review);

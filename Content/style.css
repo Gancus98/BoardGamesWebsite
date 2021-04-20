@@ -17,7 +17,7 @@ p {
 }
 
 .intro {
-    background-image: url(./images/intro_background.png);
+    background-image: url(./images/bgready.png);
     background-position: center;
     background-color: black;
     display: flex;

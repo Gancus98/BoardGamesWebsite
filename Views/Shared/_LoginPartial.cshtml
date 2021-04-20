@@ -4,14 +4,34 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        if (User.IsInRole("user") || (User.IsInRole("admin")))
+        if (User.IsInRole("user"))
         {
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
 
                     <a class="nav-link" href="@Url.Action("Index", "Manage")">
                         Witaj
-                        @User.Identity.GetUserName()
+                        @{
+                            var userEmail = User.Identity.Name;
+                            BoardGame.DAL.OnTheBoardContext db = new BoardGame.DAL.OnTheBoardContext();
+                            var query1 = db.User.Where(i => i.Email == userEmail);
+                            BoardGame.Models.UserModels user = query1.Single();
+                        }
+                        @user.FullName
+                        
+                    </a>
+
+                </li>
+                <li class="nav-item"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
+            </ul>
+        }
+        else if ((User.IsInRole("admin")))
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item">
+
+                    <a class="nav-link" href="@Url.Action("Index", "Manage")">
+                        Witaj Admin
                         @*@Html.ActionLink("Witaj," + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
                     </a>
 

@@ -5,8 +5,7 @@
 }
 
 <div class="jumbotron " style="min-height: 100vh;">
-        <p class="mb- display-4">Advertisements:</p>
-            <hr class="border-white mb-5" />
+
 @using (Html.BeginForm())
 {
     <h3 class="">
@@ -18,7 +17,6 @@
 @if (User.IsInRole("admin"))
 {
     <h2 class="text-center m-4">Advertisement database:</h2>
-    <button class="btn-lg bg-primary m-4">@Html.ActionLink("Add new game", "Create")</button>
     <table class="table">
         <tr>
             <th>
@@ -37,14 +35,9 @@
                 @Html.DisplayNameFor(model => model.MaxPlayer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+            <th></th>
         </tr>
 
         @foreach (var item in Model)
@@ -64,14 +57,12 @@
                     @Html.DisplayFor(modelItem => item.City)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
+                    @Html.DisplayFor(modelItem => item.MaxPlayer)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <button class="btn-info w-100 m-1"> @Html.ActionLink("Details", "Details", new { id = item.ID })</button>
-                    <button class="btn-warning w-100 m-1"> @Html.ActionLink("Edit", "Edit", new { id = item.ID })</button>
                     <button class="btn-danger w-100 m-1"> @Html.ActionLink("Delete", "Delete", new { id = item.ID })</button>
                 </td>
             </tr>
@@ -81,6 +72,8 @@
 }
 else
 {
+    <p class="mb- display-4">Advertisements:</p>
+    <hr class="border-white mb-5" />
     var userEmail = User.Identity.Name;
 
     <button class="btn-lg bg-info m-4">@Html.ActionLink("Add advertisement", "Create")</button>
@@ -89,7 +82,7 @@ else
         var userEmailModel = Html.DisplayFor(modelItem => item.Author.Email).ToString();
         <div class="row col-12">
             <div class="card mb-3 border-primary" style="width: 100vw;">
-                <div class="row no-gutters p-2">
+                <div class="row no-gutters">
                     <div class="col-md-3 my-auto">
                         <img class="img-thumbnail rounded-lg m-2 my-auto" src="@Html.DisplayFor(modelItem => item.Author.Photo)" class="card-img" alt="Image">
                     </div>

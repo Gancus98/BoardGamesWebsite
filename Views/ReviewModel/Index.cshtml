@@ -39,9 +39,6 @@
                         @Html.DisplayNameFor(model => model.DateOfPublication)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Author)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Contents)
                     </th>
                     <th>
@@ -61,13 +58,10 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Author)
+                            @Html.DisplayFor(modelItem => item.Author.FullName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DateOfPublication)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Author)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Contents)
@@ -87,18 +81,20 @@
         }
         else
         {
-            <p class="mb- display-4">Reviews:</p>
+            var userEmail = User.Identity.Name;
+            <h1 class="display-4 font-weight-bold" style="color: #66BCCD">Reviews:</h1>
             <hr class="border-white mb-2" />
             <button class="btn-lg bg-info m-4">@Html.ActionLink("Add Review", "Create")</button>
             foreach (var item in Model)
             {
+                var userEmailModel = Html.DisplayFor(modelItem => item.Author.Email).ToString();
                 <div class="row col-12">
                     <div class="card mb-3 border-primary" style="width: 100vw;">
                         <div class="row no-gutters">
                             <div class="col-md-3 my-auto p-2">
                                 <img class="img-thumbnail rounded-lg p-2 border-0 my-auto" src="@Html.DisplayFor(modelItem => item.Photo)" class="card-img" alt="Image">
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-7">
                                 <div class="card-body">
                                     <h3 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h3>
                                     <p class="card-text m-1">Author: @Html.DisplayFor(modelItem => item.Author.FullName)</p>
@@ -107,10 +103,16 @@
                                     <p class="card-text task m-1">@Html.DisplayFor(modelItem => item.Contents)</p>
 
                                 </div>
-
+                                <a class="btn-sm stretched-link " href="@Url.Action("Details","ReviewModel", new { id = item.ID })"></a>
 
                             </div>
-                            <a class="btn-sm stretched-link " href="@Url.Action("Details","ReviewModel", new { id = item.ID })"></a>
+                            <div class="col-md-2">
+                                @if (userEmailModel == userEmail)
+                                {
+                                    <a class="btn-danger m-3 float-right p-2" href="@Url.Action("Delete","ReviewModel", new { id = item.ID })">Delete</a>
+                                }
+                            </div>
+
 
                         </div>
                     </div>

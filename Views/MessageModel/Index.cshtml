@@ -10,9 +10,53 @@
 
     <div class="jumbotron " style="min-height: 100vh;">
         <h2 class="mb-5">Chose friend to start chat</h2>
+
         @foreach (var item in Model.Friends)
         {
-            string selectedRow = "";
+
+            var userEmail = User.Identity.Name;
+            BoardGame.DAL.OnTheBoardContext db = new BoardGame.DAL.OnTheBoardContext();
+            var query1 = db.User.Where(i => i.Email == userEmail);
+            BoardGame.Models.UserModels user = query1.Single();
+
+            var query2 = db.Message.Where(i => i.ReceiverUser.ID == item.MyFollowers.ID).Where(i => i.ReadDate == null)
+                .Where(j=>j.SenderUser.ID == item.MyObservations.ID);
+            BoardGame.Models.MessageModels messages = query2.FirstOrDefault();
+            if (messages != null)
+            {
+                string selectedRow = "";
+                if (item.ID == ViewBag.FriendId)
+                {
+                    selectedRow = "bg-info";
+                }
+                <a class="row selectedrow @selectedRow rounded m-3 p-2 text-decoration-none bg-warning border-dark" href="@Url.Action("Index","MessageModel", new { id = item.ID })">
+                    <div class="col-6 my-auto">
+                        <h3 class="my-auto">@Html.DisplayFor(modelItem => item.MyObservations.FullName)</h3>
+                    </div>
+                    <div class="col-6 my-auto">
+                        <img class="img-thumbnail my-auto float-right rounded border-0" style="max-width: 80px" src="@Html.DisplayFor(modelItem => item.MyObservations.Photo)" alt="Image">
+                    </div>
+                </a>
+            }
+            else
+            {
+                string selectedRow = "";
+                if (item.ID == ViewBag.FriendId)
+                {
+                    selectedRow = "bg-info";
+                }
+                <a class="row selectedrow @selectedRow rounded m-3 p-2 text-decoration-none bg-primary border-dark" href="@Url.Action("Index","MessageModel", new { id = item.ID })">
+                    <div class="col-6 my-auto">
+                        <h3 class="my-auto">@Html.DisplayFor(modelItem => item.MyObservations.FullName)</h3>
+                    </div>
+                    <div class="col-6 my-auto">
+                        <img class="img-thumbnail my-auto float-right rounded border-0" style="max-width: 80px" src="@Html.DisplayFor(modelItem => item.MyObservations.Photo)" alt="Image">
+                    </div>
+                </a>
+            }
+
+
+            @*string selectedRow = "";
             if (item.ID == ViewBag.FriendId)
             {
                 selectedRow = "bg-info";
@@ -24,7 +68,7 @@
                 <div class="col-6 my-auto">
                     <img class="img-thumbnail my-auto float-right rounded border-0" style="max-width: 80px" src="@Html.DisplayFor(modelItem => item.MyObservations.Photo)" alt="Image">
                 </div>
-            </a>
+            </a>*@
         }
 
         <hr class="p-5 border-0"></hr>
@@ -50,47 +94,47 @@
             var query1 = db.User.Where(i => i.Email == userEmail);
             BoardGame.Models.UserModels user1 = query1.Single();
 
-    
-        <div class="overflow-auto" style="max-height: 300px">
-            @foreach (var item in Model.Messages)
+
+            <div class="overflow-auto" style="max-height: 300px">
+                @foreach (var item in Model.Messages)
+                {
+                    if (item.SenderUser.ID == user1.ID)
+                    {
+                        <div class="row bg-primary m-2  rounded-lg ">
+                            <div class="col-2 my-auto">
+                                <p class="float-left  my-auto">@Html.DisplayFor(modelItem => item.PostDate.Hour):@Html.DisplayFor(modelItem => item.PostDate.Minute)</p>
+                            </div>
+                            <div class="col-9 my-auto">
+                                <p class="float-right  my-auto" style="margin: -2vw;">@Html.DisplayFor(modelItem => item.Contents)</p>
+                            </div>
+                            <div class="col-1 my-auto">
+                                <img class="float-right border-white bg-primary p-1" style="border-radius: 50%; width:2vw; height: 2vw; object-fit: cover;"
+                                     src="@Html.DisplayFor(modelItem => item.SenderUser.Photo)" alt="Image">
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row bg-dark m-2 rounded-lg">
+                            <div class="col-1 my-auto">
+                                <img class="float-left  p-1" style="border-radius: 50%; width:2vw; height: 2vw; object-fit: cover;"
+                                     src="@Html.DisplayFor(modelItem => item.SenderUser.Photo)" alt="Image">
+                            </div>
+                            <div class="col-9  my-auto">
+                                <p class="float-left my-auto" style="margin: -2vw;">@Html.DisplayFor(modelItem => item.Contents)</p>
+                            </div>
+                            <div class="col-2 my-auto">
+                                <p class="float-right  my-auto">@Html.DisplayFor(modelItem => item.PostDate.Hour):@Html.DisplayFor(modelItem => item.PostDate.Minute)</p>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            using (Html.BeginForm("CreateExacly", "MessageModel", new { id = ViewBag.FriendId }))
             {
-                if (item.SenderUser.ID == user1.ID)
-                {
-                    <div class="row bg-primary m-2  rounded-lg ">
-                        <div class="col-2 my-auto">
-                            <p class="float-left  my-auto">@Html.DisplayFor(modelItem => item.PostDate.Hour):@Html.DisplayFor(modelItem => item.PostDate.Minute)</p>
-                        </div>
-                        <div class="col-9 my-auto">
-                            <p class="float-right  my-auto" style="margin: -2vw;">@Html.DisplayFor(modelItem => item.Contents)</p>
-                        </div>
-                        <div class="col-1 my-auto">
-                            <img class="float-right border-white bg-primary p-1" style="border-radius: 50%; width:2vw; height: 2vw; object-fit: cover;"
-                                 src="@Html.DisplayFor(modelItem => item.SenderUser.Photo)" alt="Image">
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="row bg-dark m-2 rounded-lg">
-                        <div class="col-1 my-auto">
-                            <img class="float-left  p-1" style="border-radius: 50%; width:2vw; height: 2vw; object-fit: cover;"
-                                 src="@Html.DisplayFor(modelItem => item.SenderUser.Photo)" alt="Image">
-                        </div>
-                        <div class="col-9  my-auto">
-                            <p class="float-left my-auto" style="margin: -2vw;">@Html.DisplayFor(modelItem => item.Contents)</p>
-                        </div>
-                        <div class="col-2 my-auto">
-                            <p class="float-right  my-auto">@Html.DisplayFor(modelItem => item.PostDate.Hour):@Html.DisplayFor(modelItem => item.PostDate.Minute)</p>
-                        </div>
-                    </div>
-                }
+                <input class="form-control mr-3" placeholder="Type your message here..." name="inputarea" rows="3"></input>
+                <input class="border-0 float-right pr-4 pl-4 pt-2 pb-2 mt-2 bg-success rounded" type="submit" value="Send" />
             }
-        </div>
-        using (Html.BeginForm("CreateExacly", "MessageModel", new { id = ViewBag.FriendId }))
-        {
-            <input class="form-control mr-3" placeholder="Type your message here..." name="inputarea" rows="3"></input>
-            <input class="border-0 float-right pr-4 pl-4 pt-2 pb-2 mt-2 bg-success rounded" type="submit" value="Send" />
-        }
 
         }
     </div>

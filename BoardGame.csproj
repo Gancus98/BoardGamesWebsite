@@ -213,6 +213,7 @@
     <Content Include="Content\Images\bgfinal.png" />
     <Content Include="Content\Images\bgfinal2.png" />
     <Content Include="Content\Images\bglight.jpg" />
+    <Content Include="Content\Images\bgready.png" />
     <Content Include="Content\Images\intro_background.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\website_background.png" />

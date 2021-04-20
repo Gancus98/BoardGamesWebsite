@@ -42,6 +42,17 @@ namespace BoardGame.Controllers
             }
         }
 
+        public new HttpContextBase HttpContext
+        {
+            get
+            {
+                HttpContextWrapper context =
+                    new HttpContextWrapper(System.Web.HttpContext.Current);
+                return (HttpContextBase)context;
+            }
+        }
+
+
         public ApplicationUserManager UserManager
         {
             get
@@ -57,34 +68,38 @@ namespace BoardGame.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        public async Task<ActionResult> DeleteConfirmed(string email)
         {
+            System.Diagnostics.Debug.WriteLine("IN DELETE CONFIRMED");
             if (ModelState.IsValid)
             {
+                try
+                {
+                    System.Diagnostics.Debug.WriteLine("------");
+                    System.Diagnostics.Debug.WriteLine(email);
+                    var user1 = UserManager.FindByEmail(email);
+                    System.Diagnostics.Debug.WriteLine("przed find by name async");
+                    var user2 =  UserManager.FindByName(user1.UserName);
+                    System.Diagnostics.Debug.WriteLine("po find by name async");
+                    System.Diagnostics.Debug.WriteLine("------");
+                    System.Diagnostics.Debug.WriteLine(user2.Email);
+             
 
-                var user = await UserManager.FindByIdAsync(id);
-                var logins = user.Logins;
-                var rolesForUser = await _userManager.GetRolesAsync(id);
 
-                    foreach (var login in logins.ToList())
-                    {
-                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
-                    }
+                    System.Diagnostics.Debug.WriteLine("before");
+                    System.Diagnostics.Debug.WriteLine(user2.SecurityStamp);
 
-                    if (rolesForUser.Count() > 0)
-                    {
-                        foreach (var item in rolesForUser.ToList())
-                        {
-                            // item should be the name of the role
-                            var result = await _userManager.RemoveFromRoleAsync(user.Id, item);
-                        }
-                    }
+                    UserManager.Delete(user2);
+                    System.Diagnostics.Debug.WriteLine("after");
 
-                    await _userManager.DeleteAsync(user);
-                    
+
+                    return RedirectToAction("About");
+                } catch
+                {
+                    System.Diagnostics.Debug.WriteLine("Exception in AccountController");
+                    return RedirectToAction("About");
+                }
                 
-
-                return RedirectToAction("About");
             }
             else
             {
